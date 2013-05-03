@@ -10,7 +10,7 @@ fi
 
 graph="";
 content="";
-for ids in $( snmpwalk -v2c -c public -Oq  $hostname UCD-SNMP-MIB::memory|awk -F"::" '{print $2}'|sed -e "s/\([a-z]\)\.0/\1/g"|sed -e "s/mem//g"|egrep -v "(Index|ErrorName)"|awk -F" " '{print $1"_"$2}');do
+for ids in $( snmpwalk -v2c -c $community -Oq  $hostname UCD-SNMP-MIB::memory|awk -F"::" '{print $2}'|sed -e "s/\([a-z]\)\.0/\1/g"|sed -e "s/mem//g"|egrep -v "(Index|ErrorName)"|awk -F" " '{print $1"_"$2}');do
 	name=${ids%%_*}
 	value=${ids##*_}
 	if ! [[ "$value" =~ ^[0-9]+$ ]] ; then
